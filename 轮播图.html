@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style lang="">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        body{
+            background: #000;
+        }
+
+        .clearfix {
+            content: '';
+            clear: both;
+            display: block;
+        }
+
+        .carousel {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            width: 500px;
+            height: 300px;
+        }
+
+        li {
+            position: absolute
+        }
+
+        img {
+            width: 500px;
+            height: 300px;
+
+        }
+
+        .bullet {
+            width: 100%;
+            position: absolute;
+            bottom: 10px;
+            margin: 0 auto;
+            text-align: center;
+            z-index: 10;
+        }
+
+        span {
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #F90;
+            background-color: #F90;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .active {
+            background: red;
+        }
+
+        .image-enter-active {
+            transform: translateX(0);
+            transition: all 1s ease;
+        }
+
+        .image-leave-active {
+            transform: translateX(-100%);
+            transition: all 1s ease;
+        }
+
+        .image-enter {
+            transform: translateX(100%)
+        }
+
+        .image-leave {
+            transform: translateX(0)
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="carousel">
+    <transition-group tag='ul' class="clearfix slide" name='image'>
+    <li v-for='(image,index) in img' :key='index' v-show='index===mark'>
+    <a><img :src="image"></a>
+    </li>
+    </transition-group>
+    <!--<ul class="clearfix slide" name='image'>
+        <li v-for='(image,index) in img' :key='index' v-show='index===mark'>
+            <a><img :src="image"></a>
+        </li>
+    </ul>-->
+    <div class="bullet">
+        <span v-for='(item,index) in img.length' :class="{'active':index===mark}" @click='change(index)'>{{index+1}}</span>
+    </div>
+</div>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el: '.carousel',
+        data: {
+            mark: 0,
+            timer: null,
+            img: [ '淘宝1.png','淘宝2.jpg','淘宝3.jpg','淘宝4.jpg','淘宝5.png']
+        },
+        created() {
+            this.play()
+        },
+        methods: {
+            change(i) {
+                this.mark = i
+            },
+            autoPlay() {
+                this.mark++
+                if (this.mark == 5) {
+                    this.mark = 0
+                    return
+                }
+            },
+            play() {
+                setInterval(this.autoPlay, 1000)
+            }
+        }
+    })
+</script>
+</body>
+
+</html>
