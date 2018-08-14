@@ -42,7 +42,7 @@
                         this.isIf=true;
                         console.log(123)
                         for(var i=0 ;i<response.data.musicData.length;i++){
-                            this.dataList[i].lrc = 'http://localhost:8080/'+response.data.musicData[i].lrc;
+                            this.dataList[i].lrc =location.origin+'/'+response.data.musicData[i].lrc;
                         }
                     })
                     .catch((error)=>{
